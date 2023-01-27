@@ -1,4 +1,4 @@
-import prisma from "../src/database/db";
+import prisma from "../src/database/db.js";
 
 async function main() {
     await prisma.player.createMany({

@@ -34,5 +34,5 @@ model tournament {
   name        String
   prize       Int
   winnerid    Int
-  getwinnerid player @relation(fields: [prize], references: [id])
+  getwinnerid player @relation(fields: [winnerid], references: [id])
 }
