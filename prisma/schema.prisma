@@ -1,0 +1,38 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model player {
+  id          Int          @id @default(autoincrement())
+  name        String
+  rank        String
+  points      Int
+  whitepieces game[]       @relation(name: "whitepieces")
+  blackpieces game[]       @relation(name: "blackpieces")
+  tournaments tournament[]
+}
+
+model game {
+  id          Int    @id @default(autoincrement())
+  blackid     Int
+  whiteid     Int
+  whiteplayer player @relation(name: "whitepieces", fields: [whiteid], references: [id])
+  blackplayer player @relation(name: "blackpieces", fields: [blackid], references: [id])
+  winner      String
+}
+
+model tournament {
+  id          Int    @id @default(autoincrement())
+  name        String
+  prize       Int
+  winnerid    Int
+  getwinnerid player @relation(fields: [prize], references: [id])
+}
